@@ -46,7 +46,8 @@ addpat('a2u', 'a2'+u1, a1+'2u', a1+'2'+u1);
 for(var i of cons){
 	addpat('8'+i+'_');
 	for(var j of cons){
-		addpat('2'+i+'1'+j);
+		if('st gn'.split(' ').indexOf(i+j)<0)
+			addpat('2'+i+'1'+j);
 		addpat('_'+i+'8'+j+'8');
 		addpat('8'+i+'8'+j+'_');
 		/* // this third full loop makes file much too large - goes from 10kb to 120kb
@@ -73,8 +74,9 @@ for(var j of 'hlr'.split('')){
 }}
 
 // special cases
-addpat.apply(null,('_su5pe6r5 _co6n5 _que6m5 5e6x5 _pe6r5'+a1+'mb _pe6r5amb'
-	+ ' _d'+e1+'5s6 _de5s6 _lon6g5'+a1+'6n _lon6g5a6n _a6b5u6nd').split(' '));
+addpat.apply(null,('_su5pe6r5 _su5pe6r5e6x5 _co6n5 _co6m5 _que6m5 _e6x5 _pe6r5'+a1+'mb _pe6r5amb'
+	+ ' _d'+e1+'5s6 _de5s6 _lon6g5'+a1+'6n _lon6g5a6n _a6b5u6nd'
+	+ ' _tra6n6s5 _per5tra6n6s5 _re6d5emp5t').split(' '));
 
 // multi consonant overrides
 addpat('b5f6l', 'b5f6r', 'b5p6r', 'b5s6c', 'b6s5q', 'b5s6t', 'b5t6r',
@@ -123,7 +125,7 @@ fs.writeFile(fname, output);
 
 /*
 var txt = 'amœ́na cǽsari judǽos judǽi judǽis judǽus sǽcula';
-txt = 'coagulátum exstíngue frigus fíguli fúlgura gubernáre insúrgunt jugum largus linguam linguis lingua pinguédine regum sanguínibus singuláriter sánguinem ánguli árguit';
+txt = 'coagulátum exstíngue frigus fíguli fúlgura gubernáre insúrgunt jugum largus linguam linguis lingua pinguédine regum sanguínibus singuláriter sánguinem ánguli árguit comedamus noster surreximus redemptio';
 var htxt = hyph(txt)
 console.log(htxt);
 // */
