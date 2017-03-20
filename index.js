@@ -9,6 +9,30 @@ var patLA = {
 	'patterns': { }
 };
 
+var a1='\u00e1', e1='\u00e9', i1='\u00ed', o1='\u00f3', u1='\u00fa', y1='\u00fd', 
+	e2='\u00eb', ae='\u00e6', ae1='\u01fd', oe='\u0153', oe1='\u0153\u0301';
+
+var vowel = 'aeiouy'.split('').concat([a1,e1,i1,o1,u1,y1,e2,ae,oe,ae1,oe1]),
+	cons = 'bcdfghjklmnpqrstvwxz'.split('');
+
+function allacc(str, cb) {
+	var oacc = {'a':a1, 'e':e1, 'i':i1, 'o':o1, 'u':u1, 'y':y1};
+	oacc[ae]=ae1;
+	oacc[oe]=oe1;
+	var re = new RegExp('[aeiouy'+ae+oe+']','ig');
+
+	var retval = [str];
+	for(;;){
+		re.exec(str);
+		var li = re.lastIndex;
+		if(li>0)
+			retval.push(str.substr(0,li-1) + oacc[str[li-1]] + str.substr(li));
+		else break;
+	}
+	if(typeof cb=='function') cb.apply(null, retval);
+	return retval;
+}
+
 function addpat(){
 	for(var i=0;i<arguments.length;i++){
 		var pat = arguments[i];
@@ -18,11 +42,6 @@ function addpat(){
 	}
 }
 
-var a1='\u00e1', e1='\u00e9', i1='\u00ed', o1='\u00f3', u1='\u00fa', y1='\u00fd', 
-	e2='\u00eb', ae='\u00e6', ae1='\u01fd', oe='\u0153', oe1='\u0153\u0301';
-
-var vowel = 'aeiouy'.split('').concat([a1,e1,i1,o1,u1,y1,e2,ae,oe,ae1,oe1]),
-	cons = 'bcdfghjklmnpqrstvwxz'.split('');
 
 // vowel consonant pairs
 for(var i of vowel){
@@ -40,7 +59,7 @@ for(var i of vowel){
 }
 
 // au dipthong
-addpat('a2u', 'a2'+u1, a1+'2u', a1+'2'+u1);
+allacc('au', addpat);
 
 // multi consonant pairs
 for(var i of cons){
@@ -74,9 +93,11 @@ for(var j of 'hlr'.split('')){
 }}
 
 // special cases
-addpat.apply(null,('_su5pe6r5 _su5pe6r5e6x5 _co6n5 _co6m5 _que6m5 _e6x5 _pe6r5'+a1+'mb _pe6r5amb'
-	+ ' _d'+e1+'5s6 _de5s6 _lon6g5'+a1+'6n _lon6g5a6n _a6b5u6nd'
-	+ ' _tra6n6s5 _per5tra6n6s5 _re6d5emp5t').split(' '));
+var spc = ('_su5pe6r5 _su5pe6r5e6x5 _co6n5 _co6m5 _que6m5 _e6x5 _pe6r5amb'
+	+ ' _de5s6 _lon6g5a6n _a6b5u6nd _tra6n6s5 _per5tra6n6s5 _re6d5emp5t')
+	.split(' ');
+for(var i=0;i<spc.length;i++)
+	allacc(spc[i], addpat);
 
 // multi consonant overrides
 addpat('b5f6l', 'b5f6r', 'b5p6r', 'b5s6c', 'b6s5q', 'b5s6t', 'b5t6r',
@@ -125,7 +146,7 @@ fs.writeFile(fname, output);
 
 /*
 var txt = 'amœ́na cǽsari judǽos judǽi judǽis judǽus sǽcula';
-txt = 'coagulátum exstíngue frigus fíguli fúlgura gubernáre insúrgunt jugum largus linguam linguis lingua pinguédine regum sanguínibus singuláriter sánguinem ánguli árguit comedamus noster surreximus redemptio';
+txt = 'coagulátum exstíngue frigus fíguli fúlgura gubernáre insúrgunt jugum largus linguam linguis lingua pinguédine regum sanguínibus singuláriter sánguinem ánguli árguit comedamus noster surr'+e1+'ximus red'+e1+'mptio';
 var htxt = hyph(txt)
 console.log(htxt);
 // */
