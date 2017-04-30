@@ -130,8 +130,10 @@ var hyph = function(str, lang) {
 	if(lang=='US') hyph = hyphUS;
 	if(lang=='GB') hyph = hyphGB;
 	if(lang=='EN') hyph = hyphGB;
-
-	str = hyph.hyphenateText(str,'-',3);
+	
+	var hc = '-';
+	hc = String.fromCharCode(173);
+	str = hyph.hyphenateText(str,hc,3);
 	return str;
 };
 
@@ -143,6 +145,20 @@ var path = require('path');
 var output = 'module.exports = ' + JSON.stringify(patLA, null, 3) + ';';
 var fname = path.join(__dirname, 'la.js');
 fs.writeFile(fname, output);
+var outjq = [
+	'(function() {',
+	'var module = { exports: null };',
+	output,
+	"var h = new window['Hypher'](module.exports);",
+	"if (typeof module.exports.id === 'string') {",
+	'   module.exports.id = [module.exports.id];',
+	'}',
+	'for (var i = 0; i < module.exports.id.length; i += 1) {',
+	"   window['Hypher']['languages'][module.exports.id[i]] = h;",
+	'} }());'
+	].join('\n');
+fname = path.join(__dirname, 'jquery_hypher', 'la.js');
+fs.writeFile(fname, outjq);
 
 /*
 var txt = 'amœ́na cǽsari judǽos judǽi judǽis judǽus sǽcula';
