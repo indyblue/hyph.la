@@ -65,8 +65,7 @@ allacc('au', addpat);
 for(var i of cons){
 	addpat('8'+i+'_');
 	for(var j of cons){
-		if('st gn'.split(' ').indexOf(i+j)<0)
-			addpat('2'+i+'1'+j);
+		addpat('2'+i+'1'+j);
 		addpat('_'+i+'8'+j+'8');
 		addpat('8'+i+'8'+j+'_');
 		/* // this third full loop makes file much too large - goes from 10kb to 120kb
@@ -116,7 +115,7 @@ addpat('b5f6l', 'b5f6r', 'b5p6r', 'b5s6c', 'b6s5q', 'b5s6t', 'b5t6r',
 	'n5t6r', 'n6t5v', 'p6h5n', 'p6h5r', 'p5s6t', 'p6t5b', 'p5t6h', 'r5b6l',
 	'r6d5b', 'r5f6l', 'r5f6r', 'r6g5b', 'r5g6r', 'r6m5b', 'r6n5t', 'r5p6h',
 	'r5p6l', 'r5p6r', 'r5r6h', 'r6s5b', 'r5s6c', 'r5s6p', 'r5s6t', 's5c6h',
-	's5p6h', 't6h5r', 'x5s6p');
+	's5p6h', 't6h5r', 'x5s6p', '5s8t', '5g8n');
 
 var hyphUS = new Hypher(patEnUS);
 var hyphGB = new Hypher(patEnGB);
@@ -132,7 +131,7 @@ var hyph = function(str, lang) {
 	if(lang=='EN') hyph = hyphGB;
 	
 	var hc = '-';
-	hc = String.fromCharCode(173);
+	//hc = String.fromCharCode(173);
 	str = hyph.hyphenateText(str,hc,3);
 	return str;
 };
@@ -158,7 +157,7 @@ var outjq = [
 	'} }());'
 	].join('\n');
 fname = path.join(__dirname, 'jquery_hypher', 'la.js');
-fs.writeFile(fname, outjq);
+fs.writeFile(fname, output);
 
 /*
 var txt = 'amœ́na cǽsari judǽos judǽi judǽis judǽus sǽcula';
