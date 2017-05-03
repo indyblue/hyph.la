@@ -131,7 +131,7 @@ var hyph = function(str, lang) {
 	if(lang=='EN') hyph = hyphGB;
 	
 	var hc = '-';
-	//hc = String.fromCharCode(173);
+	hc = String.fromCharCode(173);
 	str = hyph.hyphenateText(str,hc,3);
 	return str;
 };
